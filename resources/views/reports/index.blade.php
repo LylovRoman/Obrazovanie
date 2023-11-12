@@ -13,8 +13,8 @@
         <tr>
             <th scope="col">#</th>
             <th scope="col">Отчёт</th>
-            <th scope="col">Источник</th>
             @if(Auth::user()->role === "admin")
+                <th scope="col">Привязаны</th>
                 <th scope="col">Редактировать</th>
                 <th scope="col">Удалить</th>
             @endif
@@ -24,9 +24,13 @@
         @foreach($reports as $report)
             <tr>
                 <th scope="row">{{ $report->id }}</th>
-                <td><a href="{{ route('reports.show', ['report' => $report]) }}" style="text-decoration: none">{{ $report->name }}</a></td>
-                <td><a href="{{ route('users.show', ['user' => $report->user]) }}" style="text-decoration: none">{{ $report->user->name }}</a></td>
+                <td><a href="{{ route('records.index') }}" style="text-decoration: none">{{ $report->name }}</a></td>
                 @if(Auth::user()->role === "admin")
+                    <td>
+                        @foreach($report->users as $user)
+                            <a href="{{ route('users.show', ['user' => $user]) }}" style="text-decoration: none">{{ $user->name }}</a> |
+                        @endforeach
+                    </td>
                     <th scope="col"><a href="{{ route('reports.edit', ['report' => $report]) }}" style="text-decoration: none">✏️</a></th>
                     <th scope="col"><a href="{{ route('reports.destroy', ['report' => $report]) }}" style="text-decoration: none">❌</a></th>
                 @endif

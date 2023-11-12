@@ -20,9 +20,9 @@
                                 </div>
 
                                 <div class="form-outline mb-4">
-                                    <select name="user_id" id="user_id" class="form-select">
+                                    <select name="user_ids[]" id="user_ids" class="selectpicker" multiple title="Привязать отчёт" data-live-search="true">
                                         @foreach($users as $user)
-                                            <option value="{{ $user->id }}" {{ ($report->user_id === $user->id) ?? "selected" }}>{{ $user->name }}</option>
+                                            <option value="{{ $user->id }}" {{ in_array($user->id, $selectIds) ? "selected" : ""}}>{{ $user->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>

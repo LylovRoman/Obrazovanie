@@ -13,8 +13,8 @@ class Report extends Model
 
     protected $guarded = false;
 
-    public function user()
+    public function users()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsToMany(User::class);
     }
 }

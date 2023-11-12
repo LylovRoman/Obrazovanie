@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ReportRequest;
 use App\Models\Educational;
+use App\Models\Record;
 use App\Models\Report;
+use App\Models\ReportUser;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -13,18 +15,14 @@ class ReportController extends Controller
 {
     public function index()
     {
-        $user = Auth::user();
-        $users = User::all();
-
-
-        if ($user->role === "admin") {
-            $reports = Report::all();
+        if (Auth::user()->role === "admin"){
+            $reports = Report::with('users')->get();
         } else {
-            $reports = Report::query()->where("user_id", $user->id)->get();
+            $reports = Auth::user()->reports()->with('users')->get();
         }
 
 
-        return view('reports.index', compact(['reports', 'users']));
+        return view('reports.index', compact('reports'));
     }
     public function create()
     {
@@ -36,36 +34,65 @@ class ReportController extends Controller
         $validated = $request->validated();
 
         $report = Report::query()->create([
-                'name' => $validated['name'],
-                'user_id' => $validated['user_id']
+            'name' => $validated['name']
         ]);
 
-        $text = "Это новый отчёт.";
-        file_put_contents(resource_path('views/reports/contents/content' . $report->id . '.blade.php'), $text);
+        $report_user = [];
+
+        foreach ($validated['user_ids'] as $user_id) {
+            $report_user[] = [
+                'user_id' => $user_id,
+                'report_id' => $report->id
+            ];
+        }
+
+        ReportUser::query()->insert($report_user);
 
         return redirect()->route('reports.index');
     }
 
     public function show(Report $report)
     {
-        $report->with('user');
-        return view('reports.show', compact('report'));
+        $recordTypes = [Record::class];
+        foreach ($recordTypes as $recordType){
+            if ($recordType::getReportId() === $report->id){
+                return redirect()->route($recordType::getTableName() . '.index');
+            }
+        }
+        return redirect()->route('reports.index');
     }
 
     public function edit(Report $report)
     {
         $users = User::query()->where('role', 'user')->get();
 
-        return view('reports.edit', compact(['report', 'users']));
+        $selectIds = [];
+
+        foreach (Report::query()->with("users")->find($report->id)->users as $user){
+            $selectIds[] = $user->id;
+        }
+
+        return view('reports.edit', compact(['report', 'users', 'selectIds']));
     }
     public function update(ReportRequest $request, Report $report)
     {
         $validated = $request->validated();
 
         $report->update([
-            'name' => $validated['name'],
-            'user_id' => $validated['user_id']
+            'name' => $validated['name']
         ]);
+
+        $report_user = [];
+
+        foreach ($validated['user_ids'] as $user_id) {
+            $report_user[] = [
+                'user_id' => $user_id,
+                'report_id' => $report->id
+            ];
+        }
+
+        ReportUser::query()->where('report_id', $report->id)->delete();
+        ReportUser::query()->insert($report_user);
 
         return redirect()->route('reports.index');
     }

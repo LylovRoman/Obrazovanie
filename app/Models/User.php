@@ -48,6 +48,11 @@ class User extends Authenticatable
 
     public function reports()
     {
-        return $this->hasMany(Report::class);
+        return $this->belongsToMany(Report::class);
+    }
+
+    public function records()
+    {
+        return $this->HasMany(Record::class);
     }
 }

@@ -24,7 +24,8 @@ class ReportRequest extends FormRequest
     {
         return [
             'name' => 'required|string',
-            'user_id' => 'required|string|exists:users,id'
+            'user_ids' => 'required|array',      // Changed to accept an array
+            'user_ids.*' => 'required|numeric',  // Added rule to validate each element of the array as numeric
         ];
     }
 
