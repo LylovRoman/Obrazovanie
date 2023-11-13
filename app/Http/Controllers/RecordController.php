@@ -37,22 +37,22 @@ class RecordController extends Controller
 
         foreach ($records as $record){
             $sum['KCP'] += $record->KCP;
-            $sum['students_all'] = $record->students_all;
-            $sum['students_federal'] = $record->students_federal;
-            $sum['students_subject'] = $record->students_subject;
-            $sum['students_target'] = $record->students_target;
-            $sum['students_paid'] = $record->students_paid;
-            $sum['students_foreigner'] = $record->students_foreigner;
-            $sum['students_orphan'] = $record->students_orphan;
-            $sum['students_without_care'] = $record->students_without_care;
-            $sum['need'] = $record->need;
-            $sum['provided'] = $record->provided;
-            $sum['refused'] = $record->refused;
-            $sum['release'] = $record->release;
-            $sum['GIA'] = $record->GIA;
-            $sum['interim_certification'] = $record->interim_certification;
-            $sum['basic_level'] = $record->basic_level;
-            $sum['professional_level'] = $record->professional_level;
+            $sum['students_all'] += $record->students_all;
+            $sum['students_federal'] += $record->students_federal;
+            $sum['students_subject'] += $record->students_subject;
+            $sum['students_target'] += $record->students_target;
+            $sum['students_paid'] += $record->students_paid;
+            $sum['students_foreigner'] += $record->students_foreigner;
+            $sum['students_orphan'] += $record->students_orphan;
+            $sum['students_without_care'] += $record->students_without_care;
+            $sum['need'] += $record->need;
+            $sum['provided'] += $record->provided;
+            $sum['refused'] += $record->refused;
+            $sum['release'] += $record->release;
+            $sum['GIA'] += $record->GIA;
+            $sum['interim_certification'] += $record->interim_certification;
+            $sum['basic_level'] += $record->basic_level;
+            $sum['professional_level'] += $record->professional_level;
         }
 
         $report = Report::query()->find(Record::getReportId())->first();

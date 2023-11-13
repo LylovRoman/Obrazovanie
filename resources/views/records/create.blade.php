@@ -61,7 +61,7 @@
                                 </div>
 
                                 <div class="form-outline mb-4">
-                                    <input type="number" step="0.01" name="avg-score" class="form-control" placeholder="Средний балл аттестат (для I курса)">
+                                    <input type="number" step="0.01" name="avg_score" class="form-control" placeholder="Средний балл аттестат (для I курса)">
                                 </div>
 
                                 <div class="form-outline mb-4">
@@ -71,7 +71,7 @@
                                 <h6>Количество студентов, обучающихся</h6>
 
                                 <div class="form-outline mb-4">
-                                    <input type="number" name="students-federal" class="form-control" placeholder="за счёт средств федерального бюджета">
+                                    <input type="number" name="students_federal" class="form-control" placeholder="за счёт средств федерального бюджета">
                                 </div>
 
                                 <div class="form-outline mb-4">
@@ -97,7 +97,7 @@
                                 </div>
 
                                 <div class="form-outline mb-4">
-                                    <input type="number" name="students_without-care" class="form-control" placeholder="детей, оставшихся без попечения родителей">
+                                    <input type="number" name="students_without_care" class="form-control" placeholder="детей, оставшихся без попечения родителей">
                                 </div>
 
                                 <h5>Cтудентов нуждающихся в общежитии</h5>
