@@ -94,7 +94,7 @@
                                 </div>
 
                                 <div class="form-outline mb-4">
-                                    <input type="number" value="{{ $record->students_without_care }}" name="students_without-care" class="form-control" placeholder="детей, оставшихся без попечения родителей">
+                                    <input type="number" value="{{ $record->students_without_care }}" name="students_without_care" class="form-control" placeholder="детей, оставшихся без попечения родителей">
                                 </div>
 
                                 <h5>Cтудентов нуждающихся в общежитии</h5>

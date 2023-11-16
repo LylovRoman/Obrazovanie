@@ -34,7 +34,8 @@ class ReportController extends Controller
         $validated = $request->validated();
 
         $report = Report::query()->create([
-            'name' => $validated['name']
+            'name' => $validated['name'],
+            'link' => $validated['link']
         ]);
 
         $report_user = [];
@@ -79,16 +80,19 @@ class ReportController extends Controller
         $validated = $request->validated();
 
         $report->update([
-            'name' => $validated['name']
+            'name' => $validated['name'],
+            'link' => $validated['link']
         ]);
 
         $report_user = [];
 
-        foreach ($validated['user_ids'] as $user_id) {
-            $report_user[] = [
-                'user_id' => $user_id,
-                'report_id' => $report->id
-            ];
+        if (isset($validated['user_ids'])){
+            foreach ($validated['user_ids'] as $user_id) {
+                $report_user[] = [
+                    'user_id' => $user_id,
+                    'report_id' => $report->id
+                ];
+            }
         }
 
         ReportUser::query()->where('report_id', $report->id)->delete();

@@ -20,6 +20,10 @@
                                 </div>
 
                                 <div class="form-outline mb-4">
+                                    <input type="text" name="link" class="form-control" placeholder="Ссылка на записи" value="{{ $report->link }}">
+                                </div>
+
+                                <div class="form-outline mb-4">
                                     <select name="user_ids[]" id="user_ids" class="selectpicker" multiple title="Привязать отчёт" data-live-search="true">
                                         @foreach($users as $user)
                                             <option value="{{ $user->id }}" {{ in_array($user->id, $selectIds) ? "selected" : ""}}>{{ $user->name }}</option>

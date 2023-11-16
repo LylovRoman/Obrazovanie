@@ -55,4 +55,9 @@ class User extends Authenticatable
     {
         return $this->HasMany(Record::class);
     }
+
+    public function invalids()
+    {
+        return $this->HasMany(Record::class);
+    }
 }
