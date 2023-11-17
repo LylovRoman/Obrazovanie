@@ -31,8 +31,20 @@ class UserSeeder extends Seeder
             'role' => 'user'
         ]);
         User::query()->create([
-            'login' => 'MGU',
-            'name' => 'Московский Гуманитарный Университет',
+            'login' => 'OGTU',
+            'name' => 'Орский гуманитарно-технологический институт',
+            'password' => bcrypt('password'),
+            'role' => 'user'
+        ]);
+        User::query()->create([
+            'login' => 'NPK',
+            'name' => 'ГАПОУ Новотроицкий политехнический колледж',
+            'password' => bcrypt('password'),
+            'role' => 'user'
+        ]);
+        User::query()->create([
+            'login' => 'NST',
+            'name' => 'ГАПОУ НСТ',
             'password' => bcrypt('password'),
             'role' => 'user'
         ]);

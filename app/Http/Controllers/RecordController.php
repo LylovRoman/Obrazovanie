@@ -12,10 +12,31 @@ class RecordController extends Controller
     public function index()
     {
         if (Auth::user()->role !== "admin"){
-            $records = Auth::user()->records()->where("report_id", Record::getReportId())->with('user')->get();
+            $records = Auth::user()->records();
         } else {
-            $records = Record::query()->where("report_id", Record::getReportId())->with('user')->get();
+            $records = Record::query();
         }
+
+        if (isset($_REQUEST['program']) && $_REQUEST['program']){
+            $records = $records->where("program", $_REQUEST['program']);
+        }
+        if (isset($_REQUEST['category']) && $_REQUEST['category']){
+            $records = $records->where("category", $_REQUEST['category']);
+        }
+        if (isset($_REQUEST['profession']) && $_REQUEST['profession']){
+            $records = $records->where("profession", $_REQUEST['profession']);
+        }
+        if (isset($_REQUEST['duration']) && $_REQUEST['duration']){
+            $records = $records->where("duration", $_REQUEST['duration']);
+        }
+        if (isset($_REQUEST['form']) && $_REQUEST['form']){
+            $records = $records->where("form", $_REQUEST['form']);
+        }
+        if (isset($_REQUEST['course']) && $_REQUEST['course']){
+            $records = $records->where("course", $_REQUEST['course']);
+        }
+
+        $records = $records->where("report_id", Record::getReportId())->with('user')->get();
 
         $sum['KCP'] = 0;
         $sum['students_all'] = 0;
